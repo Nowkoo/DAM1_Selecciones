@@ -5,14 +5,13 @@ constraint pk_pais primary key (id_pais)
 );
 
 create table jugador(
-id_jugador numeric(5),
+id_jugador int  AUTO_INCREMENT,
 nombre_jugador varchar(50),
-año_nacimiento date,
+año_nacimiento int,
 altura numeric(1.2),
 id_pais numeric(2),
-id_club numeric(2),
-constraint pk_pais primary key (id_pais),
-constraint fk_jugador_pais foreign key (id_pais) references pais (id_pais),
-constraint fk_jugador_club foreign key (id_club) references club (id_club)
+club varchar(50),
+constraint pk_pais PRIMARY KEY (id_jugador),
+constraint fk_jugador_pais foreign key (id_pais) references pais (id_pais)
 );
-
+select * from jugador;
