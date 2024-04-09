@@ -4,12 +4,6 @@ nombre_pais varchar(50),
 constraint pk_pais primary key (id_pais)
 );
 
-create table club(
-id_club numeric(2),
-nombre_club varchar(50),
-constraint pk_clib primary key (id_club)
-);
-
 create table jugador(
 id_jugador numeric(5),
 nombre_jugador varchar(50),
