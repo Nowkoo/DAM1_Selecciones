@@ -1,7 +1,10 @@
+import com.sun.source.tree.WhileLoopTree;
+
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -9,7 +12,9 @@ import java.util.ArrayList;
 public class Test {
     public static void main(String[] args) throws SQLException {
         File fichero = new File("./Recursos/seleccion_Australia.dat");
-        cargarFichero(fichero);
+        //cargarFichero(fichero);
+        consultarPaises();
+        consultarJugadoresPais(4);
     }
     static java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
 
@@ -17,12 +22,30 @@ public class Test {
 
     }
 
-    public void consultarCodPais() {
-
+    public static void consultarPaises() throws SQLException {
+        Statement st = con.createStatement();
+        String sqlCodigosPais = "SELECT * FROM pais";
+        ResultSet rs = st.executeQuery(sqlCodigosPais);
+        System.out.println("--------------PAÍSES--------------");
+        System.out.print("Código \t");
+        System.out.println("Nombre\t");
+        while (rs.next()) {
+            System.out.printf("%-6d\t%s\n", rs.getInt(1), rs.getString(2));
+        }
+        st.close();
+        rs.close();
     }
 
-    public void consultarJugadores(int codPais) {
-
+    public static void consultarJugadoresPais(int codPais) throws SQLException {
+        Statement st = con.createStatement();
+        String sqlCodigosPais = "SELECT * FROM jugador WHERE id_pais = " + codPais + ";";
+        ResultSet rs = st.executeQuery(sqlCodigosPais);
+        System.out.println("------------JUGADORES-------------");
+        while (rs.next()) {
+            System.out.printf("%-2d\t%-25s\t%-4d\t%-3d\t%-2d\t%s\n", rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getString(6));
+        }
+        st.close();
+        rs.close();
     }
 
     public void nuevoRegistro() {
