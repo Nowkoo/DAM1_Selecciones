@@ -1,0 +1,18 @@
+create table pais(
+id_pais numeric(2),
+nombre_pais varchar(50),
+constraint pk_pais primary key (id_pais)
+);
+
+
+
+create table jugador(
+id_jugador int  AUTO_INCREMENT,
+nombre_jugador varchar(50),
+año_nacimiento int,
+altura numeric(1.2),
+id_pais numeric(2),
+club varchar(50),
+constraint pk_pais PRIMARY KEY (id_jugador),
+constraint fk_jugador_pais foreign key (id_pais) references pais (id_pais)
+);
