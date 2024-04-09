@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Test {
     public static void main(String[] args) throws SQLException {
-        File fichero = new File("./recursos/seleccion_EEUU.dat");
+        File fichero = new File("./Recursos/seleccion_Australia.dat");
         cargarFichero(fichero);
     }
     static java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
