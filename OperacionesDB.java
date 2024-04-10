@@ -1,5 +1,3 @@
-import com.sun.source.tree.WhileLoopTree;
-
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class Test {
+public class OperacionesDB {
     public static void main(String[] args) throws SQLException {
         File fichero = new File("./Recursos/seleccion_Australia.dat");
         //cargarFichero(fichero);
@@ -18,7 +16,7 @@ public class Test {
     }
     static java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
 
-    public Test() {
+    public OperacionesDB() {
 
     }
 
@@ -48,19 +46,11 @@ public class Test {
         rs.close();
     }
 
-    public void nuevoRegistro() {
+    public static void nuevoPais() {
 
     }
 
-    public void nuevoPais() {
-
-    }
-
-    public void nuevoClub() {
-
-    }
-
-    public void nuevoJugador() {
+    public static void nuevoJugador() {
 
     }
 
