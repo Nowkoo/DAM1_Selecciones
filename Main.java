@@ -45,13 +45,13 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    OperacionesDB.nuevoPais();
+                    //OperacionesDB.nuevoPais();
                     break;
                 case 2:
                     System.out.println("Introduzca el código del país:");
                     int codigoPais = scanner.nextInt();
                     OperacionesDB.consultarJugadoresPais(codigoPais);
-                    menuConsultarJugadores(scanner);
+                    menuConsultarJugadores(scanner, codigoPais);
                     break;
                 case 3:
                     volver = true;
@@ -62,7 +62,7 @@ public class Main {
         }
     }
 
-    public static void menuConsultarJugadores(Scanner scanner) {
+    public static void menuConsultarJugadores(Scanner scanner, int codigoPais) {
         boolean volver = false;
         while (!volver) {
             System.out.println("Seleccione una opción:");
