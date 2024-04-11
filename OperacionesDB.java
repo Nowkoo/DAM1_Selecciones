@@ -146,4 +146,12 @@ public class OperacionesDB {
         return new Jugador(codpais,nombre,año,altura,club);
     }
 
+    public static Pais datosPais() {
+        System.out.println("Introducir el codigo del pais:");
+        int codigo = scan.nextInt();
+        scan.nextLine();
+        System.out.println("Introducir el nombre del pais:");
+        String pais = scan.nextLine();
+        return new Pais(codigo,pais);
+    }
     }
