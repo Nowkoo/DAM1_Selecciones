@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class OperacionesDB {
+    static Scanner scan = new Scanner(System.in);
     public static void main(String[] args) throws SQLException {
         File fichero = new File("./Recursos/seleccion_Australia.dat");
         cargarFichero(fichero);
@@ -137,4 +139,17 @@ public class OperacionesDB {
         }
         return jugadores;
     }
-}
+    public static Jugador datosJugador(int codpais) {
+        System.out.println("Introducir el nombre del jugador:");
+        String nombre = scan.nextLine();
+        System.out.println("Introducir su año de nacemiento :");
+        int año = scan.nextInt();
+        System.out.println("Introducir su altura:");
+        float altura = scan.nextFloat();
+        scan.nextLine();
+        System.out.println("Introducir su club");
+        String club = scan.nextLine();
+        return new Jugador(codpais,nombre,año,altura,club);
+    }
+
+    }

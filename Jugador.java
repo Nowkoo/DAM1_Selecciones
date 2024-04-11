@@ -14,6 +14,13 @@ public class Jugador {
         this.altura = altura;
         this.club = club;
     }
+    public Jugador(int codPais, String nombreJugador, int añoNacimiento, float altura, String club){
+        this.codPais = codPais;
+        this.nombreJugador = nombreJugador;
+        this.añoNacimiento = añoNacimiento;
+        this.altura = altura;
+        this.club = club;
+    }
 
     public int getCodPais() {
         return codPais;
