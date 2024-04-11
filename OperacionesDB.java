@@ -42,10 +42,10 @@ public class OperacionesDB {
         rs.close();
     }
 
-    public static void nuevoPais(int codPais, String nombrePais) throws SQLException {
-        if (!paisExiste(codPais)) {
+    public static void nuevoPais(Pais pais) throws SQLException {
+        if (!paisExiste(pais.getId())) {
             Statement st = con.createStatement();
-            String sqlPais = "INSERT INTO pais VALUES (" + codPais + ",'" + nombrePais + "');";
+            String sqlPais = "INSERT INTO pais VALUES (" + pais.getId() + ",'" + pais.getNombrePais() + "');";
             st.executeUpdate(sqlPais);
             st.close();
         } else {
