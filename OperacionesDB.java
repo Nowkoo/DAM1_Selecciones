@@ -10,12 +10,6 @@ import java.util.Scanner;
 
 public class OperacionesDB {
     static Scanner scan = new Scanner(System.in);
-    public static void main(String[] args) throws SQLException {
-        File fichero = new File("./Recursos/seleccion_Australia.dat");
-        cargarFichero(fichero);
-        //consultarPaises();
-        //consultarJugadoresPais(4);
-    }
     static java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
 
     public OperacionesDB() {

@@ -46,6 +46,7 @@ public class Main {
 
             switch (opcion) {
                 case 1:
+                    Pais pais = OperacionesDB.datosPais();
                     OperacionesDB.nuevoPais();
                     break;
                 case 2:
@@ -80,7 +81,8 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    OperacionesDB.nuevoJugador();
+                    Jugador jugador = OperacionesDB.datosJugador(codigoPais);
+                    OperacionesDB.nuevoJugador(jugador);
                     break;
                 case 2:
                     System.out.println("Introduzca el código del jugador:");
