@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class OperacionesDB {
-    static Scanner scan = new Scanner(System.in);
     static java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
 
     public OperacionesDB() {
@@ -48,6 +47,7 @@ public class OperacionesDB {
             String sqlPais = "INSERT INTO pais VALUES (" + pais.getId() + ",'" + pais.getNombrePais() + "');";
             st.executeUpdate(sqlPais);
             st.close();
+            System.out.println("El país ha sido añadido.");
         } else {
             System.out.println("El país que está intentando introducir ya existe en la base de datos.");
         }
@@ -62,6 +62,7 @@ public class OperacionesDB {
                     + jugador.getCodPais() + ");";
             st.executeUpdate(sqlJugador);
             st.close();
+            System.out.println("El jugador ha sido añadido.");
         } else {
             System.out.println("El jugador que está intentando introducir ya existe en la base de datos.");
         }
@@ -70,16 +71,25 @@ public class OperacionesDB {
     public static void eliminarPais(int codigoPais) throws SQLException {
         if (paisExiste(codigoPais)) {
             Statement st = con.createStatement();
-            String sqlPais = "";
+            String sqlPais = "DELETE FROM pais WHERE id_pais = " + codigoPais + ";";
             st.executeUpdate(sqlPais);
             st.close();
+            System.out.println("El país ha sido eliminado.");
         } else {
             System.out.println("El país que está intentando eliminar no existe.");
         }
     }
 
-    public static void eliminarJugador(int codigoJugador) {
-
+    public static void eliminarJugador(String nombreJugador) throws SQLException {
+        if (jugadorExiste(nombreJugador)) {
+            Statement st = con.createStatement();
+            String sqlJugador = "DELETE FROM jugador WHERE nombre_jugador = '" + nombreJugador + "';";
+            st.executeUpdate(sqlJugador);
+            st.close();
+            System.out.println("El jugador ha sido eliminado.");
+        } else {
+            System.out.println("El jugador que está intentando eliminar no existe.");
+        }
     }
 
     public static void cargarFichero(File fichero) throws SQLException {
@@ -104,25 +114,29 @@ public class OperacionesDB {
     }
 
     public static boolean paisExiste(int codPais) throws SQLException {
+        ArrayList<Integer> ids = new ArrayList<>();
         Statement st = con.createStatement();
-        String sqlCodigosPais = "SELECT id_pais FROM pais WHERE id_pais = " + codPais + ";";
+        String sqlCodigosPais = "SELECT id_pais FROM pais;";
         ResultSet rs = st.executeQuery(sqlCodigosPais);
-        rs.next();
-        int resultado = rs.getInt(1);
-        st.close();
+        while(rs.next()) {
+            ids.add(rs.getInt(1));
+        }
         rs.close();
-        return resultado != 0;
+        st.close();
+        return ids.contains(codPais);
     }
 
     public static boolean jugadorExiste(String nombreJugador) throws SQLException {
+        ArrayList<String> ids = new ArrayList<>();
         Statement st = con.createStatement();
-        String sqlCodigosPais = "SELECT nombre_jugador FROM jugador WHERE nombre_jugador = '" + nombreJugador + "';";
-        ResultSet rs = st.executeQuery(sqlCodigosPais);
-        rs.next();
-        String resultado = rs.getString("nombre_jugador");
-        st.close();
+        String sqlJugador = "SELECT nombre_jugador FROM jugador;";
+        ResultSet rs = st.executeQuery(sqlJugador);
+        while(rs.next()) {
+            ids.add(rs.getString(1));
+        }
         rs.close();
-        return resultado != null;
+        st.close();
+        return ids.contains(nombreJugador);
     }
 
     public static ArrayList arrayJugadores(File f) {
@@ -140,10 +154,10 @@ public class OperacionesDB {
         }
         return jugadores;
     }
-    public static Jugador datosJugador(int codpais) {
+    public static Jugador datosJugador(int codpais, Scanner scan) {
         System.out.println("Introducir el nombre del jugador:");
         String nombre = scan.nextLine();
-        System.out.println("Introducir su año de nacemiento :");
+        System.out.println("Introducir su año de nacimiento :");
         int año = scan.nextInt();
         System.out.println("Introducir su altura:");
         float altura = scan.nextFloat();
@@ -153,11 +167,11 @@ public class OperacionesDB {
         return new Jugador(codpais,nombre,año,altura,club);
     }
 
-    public static Pais datosPais() {
-        System.out.println("Introducir el codigo del pais:");
+    public static Pais datosPais(Scanner scan) {
+        System.out.println("Introducir el codigo del país:");
         int codigo = scan.nextInt();
         scan.nextLine();
-        System.out.println("Introducir el nombre del pais:");
+        System.out.println("Introducir el nombre del país:");
         String pais = scan.nextLine();
         return new Pais(codigo,pais);
     }

@@ -24,8 +24,12 @@ public class Main {
                 case 2:
                     System.out.println("Introduzca la ruta absoluta del fichero que desea consultar: ");
                     File file = new File(scanner.nextLine());
-                    OperacionesDB.cargarFichero(file);
-                    System.out.println("¡El contenido del fichero ha sido añadido a la base de datos!");
+                    if (file.exists()) {
+                        OperacionesDB.cargarFichero(file);
+                        System.out.println("¡El contenido del fichero ha sido añadido a la base de datos!");
+                    } else {
+                        System.out.println("El fichero seleccionado no existe.");
+                    }
                     break;
                 default:
                     System.out.println("Opción no válida, pruebe otra vez.");
@@ -46,13 +50,14 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    Pais pais = OperacionesDB.datosPais();
+                    Pais pais = OperacionesDB.datosPais(scanner);
                     OperacionesDB.nuevoPais(pais);
                     break;
                 case 2:
                     System.out.println("Introduzca el código del país:");
                     int codigoPais = leerOpcionMenu(scanner);
                     OperacionesDB.eliminarPais(codigoPais);
+                    break;
                 case 3:
                     System.out.println("Introduzca el código del país:");
                     codigoPais = leerOpcionMenu(scanner);
@@ -81,12 +86,12 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    Jugador jugador = OperacionesDB.datosJugador(codigoPais);
+                    Jugador jugador = OperacionesDB.datosJugador(codigoPais, scanner);
                     OperacionesDB.nuevoJugador(jugador);
                     break;
                 case 2:
-                    System.out.println("Introduzca el código del jugador:");
-                    int codigoJugador = leerOpcionMenu(scanner);
+                    System.out.println("Introduzca el nombre del jugador:");
+                    String codigoJugador = scanner.nextLine();
                     OperacionesDB.eliminarJugador(codigoJugador);
                     break;
                 case 3:
@@ -104,7 +109,9 @@ public class Main {
     public static int leerOpcionMenu(Scanner scanner) {
        while (true) {
            try {
-               return scanner.nextInt();
+               int resultado = scanner.nextInt();
+               scanner.nextLine();
+               return resultado;
            } catch (InputMismatchException e) {
                scanner.next();
                System.out.println("Por favor, introduzca un número:");
