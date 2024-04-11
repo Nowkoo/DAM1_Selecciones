@@ -47,7 +47,7 @@ public class Main {
             switch (opcion) {
                 case 1:
                     Pais pais = OperacionesDB.datosPais();
-                    OperacionesDB.nuevoPais();
+                    OperacionesDB.nuevoPais(pais);
                     break;
                 case 2:
                     System.out.println("Introduzca el código del país:");

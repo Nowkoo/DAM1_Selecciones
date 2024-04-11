@@ -67,8 +67,15 @@ public class OperacionesDB {
         }
     }
 
-    public static void eliminarPais(int codigoPais) {
-
+    public static void eliminarPais(int codigoPais) throws SQLException {
+        if (paisExiste(codigoPais)) {
+            Statement st = con.createStatement();
+            String sqlPais = "";
+            st.executeUpdate(sqlPais);
+            st.close();
+        } else {
+            System.out.println("El país que está intentando eliminar no existe.");
+        }
     }
 
     public static void eliminarJugador(int codigoJugador) {
