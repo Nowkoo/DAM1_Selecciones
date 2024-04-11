@@ -57,15 +57,26 @@ public class OperacionesDB {
         }
     }
 
-    public static void nuevoJugador(String nombre, int añoNacimiento, float altura, int codigoPais, String club) throws SQLException {
-        if (!jugadorExiste(nombre)) {
+    public static void nuevoJugador(Jugador jugador) throws SQLException {
+        if (!jugadorExiste(jugador.getNombreJugador())) {
             Statement st = con.createStatement();
-            String sqlJugador = "INSERT INTO jugador() VALUES";
+            String sqlJugador = "INSERT INTO jugador(nombre_jugador, año_nacimiento, altura, club, id_pais) VALUES ('" +
+                    jugador.getNombreJugador() + "'," + jugador.getAñoNacimiento() + ","
+                    + jugador.getAltura() + ",'" + jugador.getClub() + "',"
+                    + jugador.getCodPais() + ");";
             st.executeUpdate(sqlJugador);
             st.close();
         } else {
             System.out.println("El jugador que está intentando introducir ya existe en la base de datos.");
         }
+    }
+
+    public static void eliminarPais(int codigoPais) {
+
+    }
+
+    public static void eliminarJugador(int codigoJugador) {
+
     }
 
     public static void cargarFichero(File fichero) throws SQLException {
