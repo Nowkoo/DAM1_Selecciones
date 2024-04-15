@@ -59,10 +59,17 @@ public class Main {
                     OperacionesDB.eliminarPais(codigoPais);
                     break;
                 case 3:
+                    OperacionesDB.consultarPaises();
                     System.out.println("Introduzca el código del país:");
                     codigoPais = leerOpcionMenu(scanner);
-                    OperacionesDB.consultarJugadoresPais(codigoPais);
-                    menuConsultarJugadores(scanner, codigoPais);
+                    if (OperacionesDB.paisExiste(codigoPais)){
+                        OperacionesDB.consultarJugadoresPais(codigoPais);
+                        menuConsultarJugadores(scanner, codigoPais);
+                    }
+                    else {
+                        System.out.println("País no existe!");
+                    }
+
                     break;
                 case 4:
                     volver = true;
@@ -76,6 +83,7 @@ public class Main {
     public static void menuConsultarJugadores(Scanner scanner, int codigoPais) throws SQLException {
         boolean volver = false;
         while (!volver) {
+            OperacionesDB.consultarJugadoresPais(codigoPais);
             System.out.println("Seleccione una opción:");
             System.out.println("1. Añadir jugador");
             System.out.println("2. Eliminar jugador");
@@ -90,18 +98,20 @@ public class Main {
                     OperacionesDB.nuevoJugador(jugador);
                     break;
                 case 2:
+                    OperacionesDB.consultarJugadoresPais(codigoPais);
                     System.out.println("Introduzca el nombre del jugador:");
                     String nombreJugador = scanner.nextLine();
                     OperacionesDB.eliminarJugador(nombreJugador);
                     break;
                 case 3:
+                    OperacionesDB.consultarJugadoresPais(codigoPais);
                     System.out.println("Introduzca el codigo del jugador:");
                     int codJugador = scanner.nextInt();
                     if(OperacionesDB.jugadorExiste(codJugador)){
                         int num=-1;
                         do {
                             OperacionesDB.consultarJugador(codJugador);
-                            System.out.println("Elige el número del dato que deseas modificar (ingresa 0 para finalizar la modificación):");
+                            System.out.println("Elige el número del dato que deseas modificar \n(ingresa 0 para finalizar la modificación):");
                             num= leerOpcionMenu(scanner);
                             OperacionesDB.casosModificion(num,codJugador,scanner);
                         }while (num != 0);

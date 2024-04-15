@@ -141,7 +141,7 @@ public class OperacionesDB {
     public static boolean jugadorExiste(int codJugador) throws SQLException {
         ArrayList<Integer> ids = new ArrayList<>();
         Statement st = con.createStatement();
-        String sqlJugador = "SELECT id_jogador FROM jugador;";
+        String sqlJugador = "SELECT id_jugador FROM jugador;";
         ResultSet rs = st.executeQuery(sqlJugador);
         while(rs.next()) {
             ids.add(rs.getInt(1));
@@ -192,7 +192,7 @@ public class OperacionesDB {
         System.out.println("Introducir el nuevo nombre:");
         String nombre = scan.nextLine();
         Statement st = con.createStatement();
-        String sqlCambiarNombre = "update jogador set nombre_jugador ='"+nombre+"' where id_jugador ="+codJugador+";";
+        String sqlCambiarNombre = "update jugador set nombre_jugador ='"+nombre+"' where id_jugador ="+codJugador+";";
         st.executeUpdate(sqlCambiarNombre);
         st.close();
 
@@ -202,7 +202,7 @@ public class OperacionesDB {
         int ano = scan.nextInt();
         scan.nextLine();
         Statement st = con.createStatement();
-        String sqlCambiarAño = "update jogador set año_nacimiento ="+ano+" where id_jugador ="+codJugador+";";
+        String sqlCambiarAño = "update jugador set año_nacimiento ="+ano+" where id_jugador ="+codJugador+";";
         st.executeUpdate(sqlCambiarAño);
         st.close();
 
@@ -210,30 +210,31 @@ public class OperacionesDB {
     public static void modificarAlturaJugador(int codJugador, Scanner scan) throws SQLException {
         System.out.println("Introducir la nueva altura:");
         float altura = scan.nextFloat();
-        scan.nextLine();
         Statement st = con.createStatement();
-        String sqlCambiarAltura = "update jogador set año_nacemiento ="+altura+" where id_jugador ="+codJugador+";";
+        String sqlCambiarAltura = "update jugador set altura ="+altura+" where id_jugador ="+codJugador+";";
         st.executeUpdate(sqlCambiarAltura);
         st.close();
         System.out.println("Datos modificados.");
+
     }
     public static void modificarClubJugador(int codJugador, Scanner scan) throws SQLException {
-        System.out.println("Introducir la nueva altura:");
+
+        System.out.println("Introducir el nuevo club:");
         String club = scan.nextLine();
         Statement st = con.createStatement();
-        String sqlCambiarAltura = "update jogador set club ='"+club+"' where id_jugador ="+codJugador+";";
+        String sqlCambiarAltura = "update jugador set club ='"+club+"' where id_jugador ="+codJugador+";";
         st.executeUpdate(sqlCambiarAltura);
         st.close();
         System.out.println("Datos modificados.");
+
     }
     public static void modificarPaisJugador(int codJugador, Scanner scan) throws SQLException {
        otrosPaises(codJugador);
         System.out.println("Elige el codigo de un pais:");
         int code= scan.nextInt();
-        scan.nextLine();
         if(paisExiste(code)){
             Statement st = con.createStatement();
-            String sqlCambiarAltura = "update jogador set pais ="+code+" where id_jugador ="+codJugador+";";
+            String sqlCambiarAltura = "update jugador set pais ="+code+" where id_jugador ="+codJugador+";";
             st.executeUpdate(sqlCambiarAltura);
             st.close();
 
@@ -258,38 +259,38 @@ public class OperacionesDB {
     }
     public static void consultarJugador(int codJugador) throws SQLException {
         Statement st = con.createStatement();
-        String sqlCodigosPais = "SELECT * FROM jugador where id_jogador = "+codJugador+";";
+        String sqlCodigosPais = "SELECT nombre_jugador, nombre_pais, año_nacimiento, altura, club FROM jugador inner join pais using(id_pais) where id_jugador = "+codJugador+";";
         ResultSet rs = st.executeQuery(sqlCodigosPais);
-
-        System.out.println("1- Nombre:\t"+rs.getString(2));
-        System.out.println("2- Pais:\t"+ rs.getInt(3));
-        System.out.println("3- Año de nacimiento:\t"+ rs.getInt(4));
-        System.out.println("4- Altura:\t"+rs.getFloat(5));
-        System.out.println("5- Club:\t"+rs.getString(6));
+        rs.next();
+        System.out.println("1- Nombre:\t"+rs.getString(1));
+        System.out.println("2- Pais:\t"+ rs.getString(2));
+        System.out.println("3- Año de nacimiento:\t"+ rs.getInt(3));
+        System.out.println("4- Altura:\t"+rs.getFloat(4));
+        System.out.println("5- Club:\t"+rs.getString(5));
         rs.close();
         st.close();
     }
-    public static String casosModificion(int num, int codJogador, Scanner scan) throws SQLException {
+    public static String casosModificion(int num, int codJugador, Scanner scan) throws SQLException {
         switch (num){
             case 0:
                 return "Modificación finalizada.";
             case 1:
-                modificarNombreJugador(codJogador,scan);
-                return "el nombre del jugador "+codJogador+" ha sido modificado con exito!" ;
+                modificarNombreJugador(codJugador,scan);
+                return "el nombre del jugador "+codJugador+" ha sido modificado con exito!" ;
             case 2:
-                modificarPaisJugador(codJogador,scan);
-                return "el pais del jugador "+codJogador+"ha sido modificado con exito!" ;
+                modificarPaisJugador(codJugador,scan);
+                return "el pais del jugador "+codJugador+"ha sido modificado con exito!" ;
 
             case 3:
-                modificarAnoJugador(codJogador,scan);
-                return "el año del nacimiento del jugador "+codJogador+"ha sido modificado con exito!" ;
+                modificarAnoJugador(codJugador,scan);
+                return "el año del nacimiento del jugador "+codJugador+"ha sido modificado con exito!" ;
             case 4:
-                modificarAlturaJugador(codJogador,scan);
-                return "la altura del jugador "+codJogador+"ha sido modificada con exito!" ;
+                modificarAlturaJugador(codJugador,scan);
+                return "la altura del jugador "+codJugador+"ha sido modificada con exito!" ;
 
             case 5:
-                modificarClubJugador(codJogador,scan);
-                return "el club del jugador "+codJogador+"ha sido modificado con exito!" ;
+                modificarClubJugador(codJugador,scan);
+                return "el club del jugador "+codJugador+"ha sido modificado con exito!" ;
 
             default:
             return "numero de datos no existe.";
