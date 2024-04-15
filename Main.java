@@ -91,10 +91,21 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Introduzca el nombre del jugador:");
-                    String codigoJugador = scanner.nextLine();
-                    OperacionesDB.eliminarJugador(codigoJugador);
+                    String nombreJugador = scanner.nextLine();
+                    OperacionesDB.eliminarJugador(nombreJugador);
                     break;
                 case 3:
+                    System.out.println("Introduzca el codigo del jugador:");
+                    int codJugador = scanner.nextInt();
+                    if(OperacionesDB.jugadorExiste(codJugador)){
+                        int num=-1;
+                        do {
+                            OperacionesDB.consultarJugador(codJugador);
+                            System.out.println("Elige el número del dato que deseas modificar (ingresa 0 para finalizar la modificación):");
+                            num= leerOpcionMenu(scanner);
+                            OperacionesDB.casosModificion(num,codJugador,scanner);
+                        }while (num != 0);
+                    }
 
                 case 4:
                     volver = true;
@@ -118,4 +129,5 @@ public class Main {
            }
        }
     }
+
 }
