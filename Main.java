@@ -32,6 +32,8 @@ public class Main {
                         System.out.println(Colores.yellow+"El fichero seleccionado no existe."+Colores.reset);
                     }
                     break;
+                case 3:
+                    return;
                 default:
                     System.out.println(Colores.red+"Opción no válida, pruebe otra vez."+Colores.reset);
             }
