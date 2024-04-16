@@ -9,10 +9,10 @@ public class Main {
         boolean salir = false;
 
         while(!salir) {
-            System.out.println("Seleccione una opción:");
-            System.out.println("1. Consultar países");
+            System.out.println(Colores.green+"Seleccione una opción:"+Colores.reset);
+            System.out.println(Colores.blue+"1. Consultar países");
             System.out.println("2. Carga masiva de datos");
-            System.out.println("3. Salir");
+            System.out.println("3. Salir"+Colores.reset);
 
             int opcion = leerOpcionMenu(scanner);
 
@@ -22,17 +22,17 @@ public class Main {
                     menuConsultarPaises(scanner);
                     break;
                 case 2:
-                    System.out.println("Introduzca la ruta absoluta del fichero que desea consultar: ");
+                    System.out.println(Colores.green+"Introduzca la ruta absoluta del fichero que desea consultar: "+Colores.reset);
                     File file = new File(scanner.nextLine());
                     if (file.exists()) {
                         OperacionesDB.cargarFichero(file);
-                        System.out.println("¡El contenido del fichero ha sido añadido a la base de datos!");
+                        System.out.println(Colores.green+"¡El contenido del fichero ha sido añadido a la base de datos!"+Colores.reset);
                     } else {
-                        System.out.println("El fichero seleccionado no existe.");
+                        System.out.println(Colores.yellow+"El fichero seleccionado no existe."+Colores.reset);
                     }
                     break;
                 default:
-                    System.out.println("Opción no válida, pruebe otra vez.");
+                    System.out.println(Colores.red+"Opción no válida, pruebe otra vez."+Colores.reset);
             }
         }
     }
@@ -40,11 +40,11 @@ public class Main {
     public static void menuConsultarPaises(Scanner scanner) throws SQLException {
         boolean volver = false;
         while (!volver) {
-            System.out.println("Seleccione una opción:");
-            System.out.println("1. Añadir país");
+            System.out.println(Colores.green+"Seleccione una opción:"+Colores.reset);
+            System.out.println(Colores.blue+"1. Añadir país");
             System.out.println("2. Eliminar país");
             System.out.println("3. Consultar jugadores de un país");
-            System.out.println("4. Volver");
+            System.out.println("4. Volver"+Colores.reset);
 
             int opcion = leerOpcionMenu(scanner);
 
@@ -54,20 +54,20 @@ public class Main {
                     OperacionesDB.nuevoPais(pais);
                     break;
                 case 2:
-                    System.out.println("Introduzca el código del país:");
+                    System.out.println(Colores.green+"Introduzca el código del país:"+Colores.reset);
                     int codigoPais = leerOpcionMenu(scanner);
                     OperacionesDB.eliminarPais(codigoPais);
                     break;
                 case 3:
                     OperacionesDB.consultarPaises();
-                    System.out.println("Introduzca el código del país:");
+                    System.out.println(Colores.green+"Introduzca el código del país:"+Colores.reset);
                     codigoPais = leerOpcionMenu(scanner);
                     if (OperacionesDB.paisExiste(codigoPais)){
                         OperacionesDB.consultarJugadoresPais(codigoPais);
                         menuConsultarJugadores(scanner, codigoPais);
                     }
                     else {
-                        System.out.println("País no existe!");
+                        System.out.println(Colores.red+"País no existe!"+Colores.reset);
                     }
 
                     break;
@@ -75,7 +75,7 @@ public class Main {
                     volver = true;
                     break;
                 default:
-                    System.out.println("Opción no válida, pruebe otra vez.");
+                    System.out.println(Colores.red+"Opción no válida, pruebe otra vez."+Colores.reset);
             }
         }
     }
@@ -84,11 +84,11 @@ public class Main {
         boolean volver = false;
         while (!volver) {
             OperacionesDB.consultarJugadoresPais(codigoPais);
-            System.out.println("Seleccione una opción:");
-            System.out.println("1. Añadir jugador");
+            System.out.println(Colores.green+"Seleccione una opción:"+Colores.reset);
+            System.out.println(Colores.blue+"1. Añadir jugador");
             System.out.println("2. Eliminar jugador");
             System.out.println("3. Modificar jugador");
-            System.out.println("4. Volver");
+            System.out.println("4. Volver"+Colores.reset);
 
             int opcion = leerOpcionMenu(scanner);
 
@@ -99,21 +99,22 @@ public class Main {
                     break;
                 case 2:
                     OperacionesDB.consultarJugadoresPais(codigoPais);
-                    System.out.println("Introduzca el nombre del jugador:");
+                    System.out.println(Colores.green+"Introduzca el nombre del jugador:"+Colores.reset);
                     String nombreJugador = scanner.nextLine();
                     OperacionesDB.eliminarJugador(nombreJugador);
                     break;
                 case 3:
                     OperacionesDB.consultarJugadoresPais(codigoPais);
-                    System.out.println("Introduzca el codigo del jugador:");
+                    System.out.println(Colores.green+"Introduzca el codigo del jugador:"+Colores.reset);
                     int codJugador = scanner.nextInt();
                     if(OperacionesDB.jugadorExiste(codJugador)){
                         int num=-1;
                         do {
                             OperacionesDB.consultarJugador(codJugador);
-                            System.out.println("Elige el número del dato que deseas modificar \n(ingresa 0 para finalizar la modificación):");
+                            System.out.println(Colores.green+"Elige el número del dato que deseas modificar \n"+Colores.blue+"(ingresa 0 para finalizar la modificación)"+Colores.reset+":"+Colores.reset);
                             num= leerOpcionMenu(scanner);
-                            OperacionesDB.casosModificion(num,codJugador,scanner);
+                            System.out.println(Colores.yellow+OperacionesDB.casosModificion(num,codJugador,scanner)+Colores.reset);
+
                         }while (num != 0);
                     }
 
@@ -121,7 +122,7 @@ public class Main {
                     volver = true;
                     break;
                 default:
-                    System.out.println("Opción no válida, pruebe otra vez.");
+                    System.out.println(Colores.red+"Opción no válida, pruebe otra vez."+Colores.reset);
             }
         }
     }
@@ -135,7 +136,7 @@ public class Main {
                return resultado;
            } catch (InputMismatchException e) {
                scanner.next();
-               System.out.println("Por favor, introduzca un número:");
+               System.out.println(Colores.red+"Por favor, introduzca un número:"+Colores.reset);
            }
        }
     }
