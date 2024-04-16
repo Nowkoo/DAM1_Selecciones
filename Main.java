@@ -22,6 +22,7 @@ public class Main {
                     menuConsultarPaises(scanner);
                     break;
                 case 2:
+
                     System.out.println(Colores.green+"Introduzca la ruta absoluta del fichero que desea consultar: "+Colores.reset);
                     File file = new File(scanner.nextLine());
                     if (file.exists()) {
@@ -54,6 +55,7 @@ public class Main {
                     OperacionesDB.nuevoPais(pais);
                     break;
                 case 2:
+                    OperacionesDB.consultarPaises();
                     System.out.println(Colores.green+"Introduzca el código del país:"+Colores.reset);
                     int codigoPais = leerOpcionMenu(scanner);
                     OperacionesDB.eliminarPais(codigoPais);
@@ -83,7 +85,7 @@ public class Main {
     public static void menuConsultarJugadores(Scanner scanner, int codigoPais) throws SQLException {
         boolean volver = false;
         while (!volver) {
-            OperacionesDB.consultarJugadoresPais(codigoPais);
+           // OperacionesDB.consultarJugadoresPais(codigoPais);
             System.out.println(Colores.green+"Seleccione una opción:"+Colores.reset);
             System.out.println(Colores.blue+"1. Añadir jugador");
             System.out.println("2. Eliminar jugador");

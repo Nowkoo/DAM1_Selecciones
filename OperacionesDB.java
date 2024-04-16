@@ -35,9 +35,10 @@ public class OperacionesDB {
         String sqlCodigosPais = "SELECT * FROM jugador WHERE id_pais = " + codPais + ";";
         ResultSet rs = st.executeQuery(sqlCodigosPais);
         System.out.println(Colores.purple+"------------JUGADORES-------------"+Colores.reset);
-        //TODO header de la lista
+        System.out.printf(Colores.blue+"%-12s\t%-25s\t%-17s\t%-13s\t%-12s\t%s\n", "Código", "Nombre","Año de nacimiento","Altura", "Pais","Club"+Colores.reset);
+
         while (rs.next()) {
-            System.out.printf("%-2d\t%-25s\t%-4d\t%-3d\t%-2f\t%s\n", rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getFloat(5), rs.getString(6));
+            System.out.printf("%-12d\t%-25s\t%-17d\t%-13.2f\t%-12d\t%s\n", rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getFloat(4), rs.getInt(5), rs.getString(6));
         }
         st.close();
         rs.close();
@@ -233,7 +234,7 @@ public class OperacionesDB {
         int code= scan.nextInt();
         if(paisExiste(code)){
             Statement st = con.createStatement();
-            String sqlCambiarAltura = "update jugador set pais ="+code+" where id_jugador ="+codJugador+";";
+            String sqlCambiarAltura = "update jugador set id_pais ="+code+" where id_jugador ="+codJugador+";";
             st.executeUpdate(sqlCambiarAltura);
             st.close();
 
@@ -258,38 +259,40 @@ public class OperacionesDB {
     }
     public static void consultarJugador(int codJugador) throws SQLException {
         Statement st = con.createStatement();
-        String sqlCodigosPais = "SELECT nombre_jugador, nombre_pais, año_nacimiento, altura, club FROM jugador inner join pais using(id_pais) where id_jugador = "+codJugador+";";
+        String sqlCodigosPais = "SELECT nombre_jugador, nombre_pais, año_nacimiento, altura, club FROM jugador inner join pais using(id_pais) where id_jugador = " + codJugador + ";";
         ResultSet rs = st.executeQuery(sqlCodigosPais);
         rs.next();
-        System.out.printf(Colores.blue+"1- Nombre:\t %-17s\n"+Colores.reset,rs.getString(1));
-        System.out.printf(Colores.blue+"2- Pais:\t %-17s\n"+Colores.reset, rs.getString(2));
-        System.out.printf(Colores.blue+"3- Año de nacimiento:\t %d\n"+Colores.reset, rs.getInt(3));
-        System.out.printf(Colores.blue+"4- Altura:\t %-17f\n"+Colores.reset,rs.getFloat(4));
-        System.out.printf(Colores.blue+"5- Club:\t %-17s\n"+Colores.reset,rs.getString(5));
-        rs.close();
-        st.close();
+        System.out.println(
+                  Colores.blue + "1- Nombre:           \t" + Colores.reset + rs.getString(1) + "\n"
+                + Colores.blue + "2- Pais:             \t" + Colores.reset + rs.getString(2) + "\n"
+                + Colores.blue + "3- Año de nacimiento:\t" + Colores.reset + rs.getInt(3) + "\n"
+                + Colores.blue + "4- Altura:           \t" + Colores.reset + rs.getFloat(4) + "\n"
+                + Colores.blue + "5- Club:             \t" + Colores.reset + rs.getString(5)
+
+        );
     }
+
     public static String casosModificion(int num, int codJugador, Scanner scan) throws SQLException {
         switch (num){
             case 0:
                 return "Modificación finalizada.";
             case 1:
                 modificarNombreJugador(codJugador,scan);
-                return "el nombre del jugador "+codJugador+" ha sido modificado con exito!" ;
+                return "El nombre del jugador "+codJugador+" ha sido modificado con exito!" ;
             case 2:
                 modificarPaisJugador(codJugador,scan);
-                return "el pais del jugador "+codJugador+"ha sido modificado con exito!" ;
+                return "El pais del jugador "+codJugador+" ha sido modificado con exito!" ;
 
             case 3:
                 modificarAnoJugador(codJugador,scan);
-                return "el año del nacimiento del jugador "+codJugador+"ha sido modificado con exito!" ;
+                return "El año del nacimiento del jugador "+codJugador+" ha sido modificado con exito!" ;
             case 4:
                 modificarAlturaJugador(codJugador,scan);
-                return "la altura del jugador "+codJugador+"ha sido modificada con exito!" ;
+                return "La altura del jugador "+codJugador+" ha sido modificada con exito!" ;
 
             case 5:
                 modificarClubJugador(codJugador,scan);
-                return "el club del jugador "+codJugador+"ha sido modificado con exito!" ;
+                return "El club del jugador "+codJugador+" ha sido modificado con exito!" ;
 
             default:
             return "numero de datos no existe.";
